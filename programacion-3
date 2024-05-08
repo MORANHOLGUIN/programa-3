@@ -1,0 +1,99 @@
+package application;
+
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.InputStream;
+import java.net.URL;
+
+public class application extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        VBox root = new VBox();
+        root.setPadding(new Insets(10));
+        root.setSpacing(10);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+
+        
+        ImageView imageView1 = createImageViewFromURL("https://via.placeholder.com/150");
+        ImageView imageView2 = createImageViewFromURL("https://via.placeholder.com/150");
+        ImageView imageView3 = createImageViewFromURL("https://via.placeholder.com/150");
+        ImageView imageView4 = createImageViewFromURL("https://via.placeholder.com/150");
+
+        Label nameLabel1 = new Label("John");
+        Label lastNameLabel1 = new Label("APELLIDO: Doe");
+
+        Label nameLabel2 = new Label("NOMBRE: Jane");
+        Label lastNameLabel2 = new Label("APELLIDO: Smith");
+
+        Label nameLabel3 = new Label("NOMBRE: Michael");
+        Label lastNameLabel3 = new Label("APELLIDO: Johnson");
+
+        Label nameLabel4 = new Label("NOMBRE: Emily");
+        Label lastNameLabel4 = new Label("APELLIDO: Brown");
+
+        gridPane.addRow(0, imageView1, nameLabel1, lastNameLabel1);
+        gridPane.addRow(1, imageView2, nameLabel2, lastNameLabel2);
+        gridPane.addRow(2, imageView3, nameLabel3, lastNameLabel3);
+        gridPane.addRow(3, imageView4, nameLabel4, lastNameLabel4);
+
+        
+        VBox listViewBox = new VBox();
+        listViewBox.setSpacing(10);
+
+        
+        ListView<String> listView = new ListView<>();
+        listView.setItems(FXCollections.observableArrayList());
+        listViewBox.getChildren().add(listView);
+
+        
+        TextField textField = new TextField();
+        textField.setPromptText("Ingrese un nuevo elemento");
+        listViewBox.getChildren().add(textField);
+
+        
+        HBox hbox = new HBox();
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(gridPane, listViewBox);
+
+        root.getChildren().add(hbox);
+
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("APLICACION");
+        primaryStage.show();
+    }
+
+    private ImageView createImageViewFromURL(String url) {
+        try {
+            InputStream inputStream = new URL(url).openStream();
+            Image image = new Image(inputStream);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            return imageView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
